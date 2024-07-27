@@ -2,6 +2,8 @@ package com.prunnytest.bookstore.util;
 
 public class Constants {
 
+    // FOR AUTHORS
+
     public final static String AUTHOR_RETRIEVED_SUCCESS = "Author successfully retrieved";
 
     public final static String AUTHOR_CREATED_SUCCESS = "Author successfully created";
