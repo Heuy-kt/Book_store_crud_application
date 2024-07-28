@@ -54,7 +54,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> optionalAuthor = authorRepository.findById(id);
 
         if (optionalAuthor.isEmpty()) {
-            throw new RuntimeException("USER DOES NOT EXIST");
+            throw new NotFoundException("USER DOES NOT EXIST");
         }
 
         Author author = optionalAuthor.get();

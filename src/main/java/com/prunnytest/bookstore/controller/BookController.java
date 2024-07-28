@@ -34,7 +34,7 @@ public class BookController {
 
     @Operation(summary = "Register book using the Author and Genre reference ID's")
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> registerBook(@RequestBody BookDto bookDto) throws AlreadyExistsException, NotFoundException {
+    public ResponseEntity<Map<String, Object>> registerBook(@RequestBody BookDto bookDto) throws AlreadyExistsException {
 
         BookResponseDto saveBook = bookService.saveBook(bookDto);
 

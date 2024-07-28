@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AlreadyExistsException extends RuntimeException{
+public class NotAccessibleException extends RuntimeException{
     private final String message;
-
 }

@@ -1,5 +1,6 @@
 package com.prunnytest.bookstore.model;
 
+import com.prunnytest.bookstore.model.enums.Roles;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,8 @@ public class Book {
   @ManyToOne
   @JoinColumn(name = "genre_id")
   private Genre genre;
+
+  @Enumerated(EnumType.ORDINAL)
+  private Roles role;
 
 }
