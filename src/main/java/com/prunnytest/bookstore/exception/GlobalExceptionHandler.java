@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CustomErrorResponse> handleGenericException(Exception ex) {
         var errors = new HashMap<String, String>();
-        errors.put(ex.getMessage(), String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        errors.put(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), ex.getMessage());
         CustomErrorResponse response = new CustomErrorResponse(errors);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

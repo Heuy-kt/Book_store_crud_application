@@ -32,15 +32,15 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponseDto saveAuthor(AuthorDto authorDto) throws AlreadyExistsException {
 
-        Optional<Author> optionalAuthor = authorRepository.findByName(authorDto.getName());
+        Optional<Author> optionalAuthor = authorRepository.findByName(authorDto.name());
 
         if (optionalAuthor.isPresent()) {
             throw new AlreadyExistsException("USER ALREADY EXISTS");
         }
 
         Author author = new Author();
-        author.setName(authorDto.getName());
-        author.setBio(authorDto.getBio());
+        author.setName(authorDto.name());
+        author.setBio(authorDto.Bio());
 
         authorRepository.save(author);
         log.info("Author successfully saved to database");
@@ -58,8 +58,8 @@ public class AuthorServiceImpl implements AuthorService {
         }
 
         Author author = optionalAuthor.get();
-        author.setName(authorDto.getName());
-        author.setBio(authorDto.getBio());
+        author.setName(authorDto.name());
+        author.setBio(authorDto.Bio());
 
         authorRepository.save(author);
         log.info("Author successfully updated");

@@ -5,6 +5,7 @@ import com.prunnytest.bookstore.dtos.AuthorResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.AuthorService;
+import com.prunnytest.bookstore.service.Impl.AuthorServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import static com.prunnytest.bookstore.util.Constants.*;
 public class AuthorController {
 
     @Autowired
-    private AuthorService authorService;
+    private AuthorServiceImpl authorService;
 
 
     @Operation(summary = "Register the Author")

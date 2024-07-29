@@ -49,15 +49,15 @@ public class BookServiceImpl implements BookService {
         Optional<Author> optionalAuthor = authorRepository.findById(bookDto.getAuthorId());
         Optional<Genre> optionalGenre = genreRepository.findById(bookDto.getGenreId());
 
-        if (optionalBook.isPresent()){
+        if (optionalBook.isPresent() ){
             throw new AlreadyExistsException("Book already exists");
         }
 
-        if (optionalAuthor.isEmpty()){
+        if (optionalAuthor.isEmpty() || !checkAuthor(optionalAuthor.get().getId())){
             throw new NotFoundException("Author not found");
         }
 
-        if (optionalGenre.isEmpty()){
+        if (optionalGenre.isEmpty()||!checkGenre(optionalAuthor.get().getId())){
             throw new NotFoundException("Genre not found");
         }
 
@@ -143,6 +143,13 @@ public class BookServiceImpl implements BookService {
 
         bookRepository.delete(book);
 
+    }
+
+    public boolean checkAuthor(long id){
+        return authorRepository.existsById(id);
+    }
+    public boolean checkGenre(long id){
+        return genreRepository.existsById(id);
     }
 
 }

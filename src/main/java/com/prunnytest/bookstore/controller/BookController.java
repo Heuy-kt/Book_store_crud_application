@@ -7,6 +7,7 @@ import com.prunnytest.bookstore.dtos.BookResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.BookService;
+import com.prunnytest.bookstore.service.Impl.BookServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ import static com.prunnytest.bookstore.util.Constants.*;
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookService;
 
 
     @Operation(summary = "Register book using the Author and Genre reference ID's")
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> registerBook(@RequestBody BookDto bookDto) throws AlreadyExistsException {
+    public ResponseEntity<Map<String, Object>> registerBook(@RequestBody BookDto bookDto) throws AlreadyExistsException, NotFoundException {
 
         BookResponseDto saveBook = bookService.saveBook(bookDto);
 
