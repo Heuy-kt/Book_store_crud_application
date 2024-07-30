@@ -45,10 +45,13 @@ public class UserServiceImpl implements UserService {
                 .role(Roles.BASIC)
                 .build();
         userRepository.save(user);
-
-        return modelMapper.map(user, UserResponseDto.class);
-
-
+        return UserResponseDto
+                .builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
     }
 
     @Override
@@ -78,8 +81,8 @@ public class UserServiceImpl implements UserService {
         return new UserResponseDto(
                 user.getFirstName(),
                 user.getLastName(),
-                user.getEmail(),
-                Roles.BASIC
+                user.getUsername(),
+                user.getEmail()
         );
     }
 

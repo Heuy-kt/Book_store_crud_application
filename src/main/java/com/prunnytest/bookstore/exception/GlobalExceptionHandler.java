@@ -19,7 +19,14 @@ public class GlobalExceptionHandler {
       return ResponseEntity
               .status(HttpStatus.NOT_FOUND)
               .body(nfe.getMessage());
-  }
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<String> handle(AlreadyExistsException aee){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(aee.getMessage());
+    }
 
   @ExceptionHandler(NotAccessibleException.class)
   public ResponseEntity<String> handle(NotAccessibleException ex){
@@ -59,8 +66,8 @@ public class GlobalExceptionHandler {
 //        CustomErrorResponse response = new CustomErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
 //        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<CustomErrorResponse> handleGenericException(Exception ex) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<CustomErrorResponse> handleGenericException(RuntimeException ex) {
         var errors = new HashMap<String, String>();
         errors.put(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), ex.getMessage());
         CustomErrorResponse response = new CustomErrorResponse(errors);

@@ -1,12 +1,13 @@
 package com.prunnytest.bookstore.dtos;
 
-import com.prunnytest.bookstore.model.enums.Roles;
+import lombok.Builder;
 
+@Builder
 public record UserResponseDto(
         String firstName,
         String lastName,
         String username,
-        Roles role
+        String email
 
 ) {
 }

@@ -9,6 +9,7 @@ import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.GenreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,15 @@ import static com.prunnytest.bookstore.util.Constants.*;
 
 @Tag(name = "Genre", description = "Genres set of APIS")
 @RestController
-@RequestMapping("/api/v1/genre")
+@RequiredArgsConstructor
+@RequestMapping("api/v1/genre")
 public class GenreController {
 
 
-    @Autowired
-    private GenreService genreService;
+    private final GenreService genreService;
 
     @Operation(summary = "Register the Genres")
-    @PostMapping("/create")
+    @PostMapping("create")
     public ResponseEntity<Map<String, Object>> createGenre(@RequestBody GenreDto genreDto) throws AlreadyExistsException {
 
         GenreResponseDto saveGenre = genreService.saveGenre(genreDto);
@@ -74,6 +75,8 @@ public class GenreController {
     public ResponseEntity<Map<String, Object>> getAllGenres() {
         List<GenreResponseDto> genre = genreService.listAllGenres();
         Map<String, Object> response = new HashMap<>();
+
+
         response.put("status", "success");
         response.put("statusCode", HttpStatus.OK.value());
         response.put("message", GENRE_RETRIEVED_SUCCESS);
