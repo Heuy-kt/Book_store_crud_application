@@ -1,13 +1,16 @@
 package com.prunnytest.bookstore.model.enums;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.prunnytest.bookstore.model.enums.Permission.*;
 
+@Getter
 @RequiredArgsConstructor
 public enum Roles {
     BASIC(Set.of(USER_READ_BASIC)),
@@ -43,7 +46,14 @@ public enum Roles {
     );
 
     private final Set<Permission> permissions;
-
+    public List<SimpleGrantedAuthority> gratedUserAuthorities(){
+        var authorities = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .toList();
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
+        return authorities;
+    }
 
 
 }
