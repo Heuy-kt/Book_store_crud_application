@@ -15,6 +15,9 @@ import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +28,7 @@ import static java.lang.String.format;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserDetailsServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
@@ -135,5 +138,12 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userDto.email());
 
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not in database")
+        );
     }
 }
