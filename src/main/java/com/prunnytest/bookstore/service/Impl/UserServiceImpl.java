@@ -15,9 +15,6 @@ import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +25,7 @@ import static java.lang.String.format;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
@@ -45,7 +42,7 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
                 .username(userDto.userName())
                 .email(userDto.email())
                 .password(userDto.password())
-                .role(Roles.BASIC)
+                .role(Roles.USER)
                 .build();
         userRepository.save(user);
         return UserResponseDto
@@ -62,7 +59,7 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
         var user = userRepository.findByUsername(userDto.userName())
                 .orElseThrow(()->
                         new NotFoundException(format("$s not found, and cant be updated", userDto.userName()))
-                    );
+                );
         mergeUser(user, userDto);
         userRepository.save(user);
         log.info("Author successfully updated");
@@ -103,25 +100,16 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
     @Override
     public Book getABook(Long id, User user) throws RuntimeException{
         var book = bookRepository.findById(id).orElseThrow(() ->
-                    new NotFoundException("Cant find book with this ID")
-                );
-        if(book.getRole().equals(user.getRole()) || user.getRole().equals(Roles.PREMIUM)){
-            return book;
-        }else{
-            throw new NotAccessibleException("You do not have access to this book");
-        }
+                new NotFoundException("Cant find book with this ID")
+        );
+        return book;
     }
 
     @Override
     public Book getABook(String title, User user) throws RuntimeException{
         var book = bookRepository.findBookByTitle(title).orElseThrow(() ->
                 new NotFoundException("Cant find book with that title"));
-        if(book.getRole().equals(user.getRole()) || user.getRole().equals(Roles.PREMIUM)){
-            return book;
-        }else{
-            throw new NotAccessibleException("You do not have access to this book");
-        }
-
+        return book;
     }
 
     private void mergeUser(User user, UserDto userDto) {
@@ -138,12 +126,5 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
             user.setEmail(userDto.email());
 
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("User not in database")
-        );
     }
 }

@@ -2,7 +2,8 @@ package com.prunnytest.bookstore.controller;
 
 import com.prunnytest.bookstore.dtos.UserDto;
 import com.prunnytest.bookstore.dtos.UserResponseDto;
-import com.prunnytest.bookstore.service.Impl.UserDetailsServiceImpl;
+
+import com.prunnytest.bookstore.service.Impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserDetailsServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @PostMapping("create")
     public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserDto userDto){
         return ResponseEntity.ok(userService.saveUser(userDto));
 
     }
-
-    public
 }

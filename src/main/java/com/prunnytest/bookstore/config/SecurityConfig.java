@@ -1,10 +1,12 @@
 package com.prunnytest.bookstore.config;
 
+import com.prunnytest.bookstore.config.exceptions.CustomAccessDeniedHandler;
 import com.prunnytest.bookstore.security.filter.JWTAuthenticationFilter;
-import com.prunnytest.bookstore.service.Impl.UserDetailsServiceImpl;
+import com.prunnytest.bookstore.security.services.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -23,6 +26,7 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -30,12 +34,16 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         req -> req
-                                .requestMatchers("/login/**", "register/**")
+                                .requestMatchers("v1/api/authentication/login/**", "v1/api/authentication/register/**")
                                 .permitAll()
+                                .requestMatchers("/premium/**").hasAnyAuthority("PREMIUM")
+                                .requestMatchers("/getAll/**").hasAnyAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
                 .userDetailsService(userDetailsServiceImpl)
+                .exceptionHandling(e -> e.accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
