@@ -22,3 +22,11 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+#Security configuration
+application:
+  security:
+    jwt:
+      secret-key: 363f414bc19f428f4b4595ba9cddfd10059a3d8f67868f82492fe5a50f9743e4
+      access-token-expiration: 3600000
+      refresh-token-expiration: 604800000
+

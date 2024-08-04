@@ -33,25 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto saveUser(UserDto userDto) throws AlreadyExistsException{
-        if(userRepository.findByUsername(userDto.userName()).isPresent()){
-            throw new AlreadyExistsException("USERNAME ALREADY EXISTS");
-        }
-        var user = User.builder()
-                .firstName(userDto.firstName())
-                .lastName(userDto.lastName())
-                .username(userDto.userName())
-                .email(userDto.email())
-                .password(userDto.password())
-                .role(Roles.USER)
-                .build();
-        userRepository.save(user);
-        return UserResponseDto
-                .builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .build();
+
+       return new UserResponseDto("Ridwan", "Bolanle", "heuy.kt", "7devanle@gmail.com");
     }
 
     @Override

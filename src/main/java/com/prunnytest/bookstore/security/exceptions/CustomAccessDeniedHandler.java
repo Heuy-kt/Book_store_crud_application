@@ -1,4 +1,4 @@
-package com.prunnytest.bookstore.config.exceptions;
+package com.prunnytest.bookstore.security.exceptions;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

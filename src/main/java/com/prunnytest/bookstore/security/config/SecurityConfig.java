@@ -1,6 +1,6 @@
-package com.prunnytest.bookstore.config;
+package com.prunnytest.bookstore.security.config;
 
-import com.prunnytest.bookstore.config.exceptions.CustomAccessDeniedHandler;
+import com.prunnytest.bookstore.security.exceptions.CustomAccessDeniedHandler;
 import com.prunnytest.bookstore.security.filter.JWTAuthenticationFilter;
 import com.prunnytest.bookstore.security.services.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +34,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         req -> req
-                                .requestMatchers("v1/api/authentication/login/**", "v1/api/authentication/register/**")
+                                .requestMatchers("login/**", "register/**", "/refresh_token")
                                 .permitAll()
                                 .requestMatchers("/premium/**").hasAnyAuthority("PREMIUM")
                                 .requestMatchers("/getAll/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/premium/**").hasAnyAuthority("PREMIUM")
                                 .anyRequest()
                                 .authenticated()
                 )

@@ -3,8 +3,10 @@ package com.prunnytest.bookstore.security.services;
 import com.prunnytest.bookstore.dtos.AuthenticationResponseDto;
 import com.prunnytest.bookstore.dtos.UserDto;
 
+import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.User;
+import com.prunnytest.bookstore.model.enums.Plan;
 import com.prunnytest.bookstore.model.enums.Roles;
 import com.prunnytest.bookstore.repository.UserRepository;
 import com.prunnytest.bookstore.security.jwt.JWTService;
@@ -27,13 +29,17 @@ public class AuthenticationService  {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponseDto register(UserDto userDto) {
+        if(userRepository.findByUsername(userDto.userName()).isPresent() || userRepository.findByEmail(userDto.email()).isPresent()){
+            throw new AlreadyExistsException("EMAIL OR USERNAME ALREADY EXISTS");
+        }
         User user = User.builder()
                 .firstName(userDto.firstName())
                 .lastName(userDto.lastName())
                 .username(userDto.userName())
                 .email(userDto.email())
-                .password(userDto.password())
+                .password(passwordEncoder.encode(userDto.password()))
                 .role(Roles.USER)
+                .plan(Plan.BASIC)
                 .build();
         userRepository.save(user);
         String token = jwtService.generateToken(user);
