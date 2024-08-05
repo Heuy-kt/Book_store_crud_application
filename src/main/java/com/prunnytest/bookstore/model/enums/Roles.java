@@ -9,52 +9,60 @@ import java.util.Set;
 
 import static com.prunnytest.bookstore.model.enums.Permission.*;
 
+@Getter
+@RequiredArgsConstructor
 public enum Roles {
-    USER,
-    ADMIN,
-    MANAGER
+    USER(
+            Set.of(
+                    BASIC_READ_BASIC
+            )
+    ),
+    BASIC(
+            Set.of(
+                    BASIC_READ_BASIC
+            )
 
-//    BASIC(Set.of(USER_READ_BASIC)),
-//
-//    PREMIUM(
-//            Set.of(
-//                    USER_READ_PREMIUM,
-//                    USER_READ_BASIC
-//            )
-//    ),
-//
-//    ADMIN(
-//            Set.of(
-//                    ADMIN_READ,
-//                    ADMIN_UPDATE,
-//                    ADMIN_DELETE,
-//                    ADMIN_WRITE,
-//
-//                    MANAGER_WRITE,
-//                    MANAGER_READ,
-//                    MANAGER_UPDATE,
-//                    MANAGER_DELETE
-//            )
-//    ),
-//
-//    MANAGER(
-//            Set.of(
-//                    MANAGER_WRITE,
-//                    MANAGER_READ,
-//                    MANAGER_UPDATE,
-//                    MANAGER_DELETE
-//            )
-//    );
+    ),
 
-//    private final Set<Permission> permissions;
-//    public List<SimpleGrantedAuthority> grantedUserAuthorities(){
-//        var authorities = getPermissions()
-//                .stream()
-//                .map(permission -> new SimpleGrantedAuthority(permission.name()))
-//                .toList();
-//        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
-//        return authorities;
-//    }
+    PREMIUM(
+            Set.of(
+                    PREMIUM_READ_PREMIUM,
+                    PREMIUM_READ_BASIC
+            )
+    ),
 
+    ADMIN(
+            Set.of(
+                    ADMIN_READ,
+                    ADMIN_UPDATE,
+                    ADMIN_DELETE,
+                    ADMIN_WRITE,
+
+                    MANAGER_WRITE,
+                    MANAGER_READ,
+                    MANAGER_UPDATE,
+                    MANAGER_DELETE
+            )
+    ),
+
+    MANAGER(
+            Set.of(
+                    MANAGER_WRITE,
+                    MANAGER_READ,
+                    MANAGER_UPDATE,
+                    MANAGER_DELETE
+            )
+    );
+
+    private final Set<Permission> permissions;
+
+    public List<SimpleGrantedAuthority> getAuthorities(){
+        var authorities = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .toList();
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
+        return authorities;
+    }
 
 }

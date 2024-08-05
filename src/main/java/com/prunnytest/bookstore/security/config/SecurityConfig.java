@@ -19,6 +19,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.prunnytest.bookstore.model.enums.Roles.*;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -34,11 +36,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         req -> req
-                                .requestMatchers("login/**", "register/**", "refresh_token/**", "basic/**")
+                                .requestMatchers("login/**", "register/**", "refresh_token/**")
                                 .permitAll()
-                                .requestMatchers("/premium/**").hasAnyAuthority("PREMIUM")
-                                .requestMatchers("/getAll/**").hasAnyAuthority("ADMIN")
-                                .requestMatchers("/premium/**").hasAnyAuthority("PREMIUM")
+                                .requestMatchers("/basic/**").hasAnyAuthority(ADMIN.name(), BASIC.name(), PREMIUM.name(), MANAGER.name())
+                                .requestMatchers("/premium/**").hasAnyAuthority(ADMIN.name(), MANAGER.name(), ADMIN.name())
+                                .requestMatchers("/admin/**").hasAnyAuthority(ADMIN.name())
+                                .requestMatchers("/manage/**").hasAnyAuthority(ADMIN.name(), MANAGER.name())
+                                .requestMatchers()
                                 .anyRequest()
                                 .authenticated()
                 )

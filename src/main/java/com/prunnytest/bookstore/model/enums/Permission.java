@@ -3,12 +3,15 @@ package com.prunnytest.bookstore.model.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+
 @Getter
 @RequiredArgsConstructor
 public enum Permission{
 
-    USER_READ_PREMIUM("user:premium"),
-    USER_READ_BASIC("user:basic"),
+    PREMIUM_READ_PREMIUM("user:read premium"),
+    PREMIUM_READ_BASIC("user: read basic"),
+
+    BASIC_READ_BASIC("user: read basic"),
 
     ADMIN_READ("admin:read"),
     ADMIN_UPDATE("admin:update"),
