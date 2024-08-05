@@ -1,19 +1,13 @@
 package com.prunnytest.bookstore.controller;
 
-import com.prunnytest.bookstore.dtos.AuthorDto;
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
-import com.prunnytest.bookstore.dtos.BookDto;
-import com.prunnytest.bookstore.dtos.BookResponseDto;
+import com.prunnytest.bookstore.requests.BookDto;
+import com.prunnytest.bookstore.responses.BookResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
-import com.prunnytest.bookstore.service.BookService;
 import com.prunnytest.bookstore.service.Impl.BookServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

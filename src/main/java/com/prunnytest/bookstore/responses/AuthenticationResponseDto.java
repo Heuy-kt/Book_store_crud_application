@@ -1,4 +1,4 @@
-package com.prunnytest.bookstore.dtos;
+package com.prunnytest.bookstore.responses;
 
 import lombok.Builder;
 

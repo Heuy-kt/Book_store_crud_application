@@ -1,9 +1,10 @@
 package com.prunnytest.bookstore.service.Impl;
 
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
-import com.prunnytest.bookstore.dtos.BookDto;
-import com.prunnytest.bookstore.dtos.BookResponseDto;
-import com.prunnytest.bookstore.dtos.GenreResponseDto;
+import com.prunnytest.bookstore.requests.AuthorDto;
+import com.prunnytest.bookstore.responses.AuthorResponseDto;
+import com.prunnytest.bookstore.requests.BookDto;
+import com.prunnytest.bookstore.responses.BookResponseDto;
+import com.prunnytest.bookstore.responses.GenreResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.Author;
@@ -15,13 +16,9 @@ import com.prunnytest.bookstore.repository.GenreRepository;
 import com.prunnytest.bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,9 +42,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponseDto saveBook(BookDto bookDto) throws AlreadyExistsException, NotFoundException {
 
-        Optional<Book> optionalBook = bookRepository.findBookByTitle(bookDto.getTitle());
-        Optional<Author> optionalAuthor = authorRepository.findById(bookDto.getAuthorId());
-        Optional<Genre> optionalGenre = genreRepository.findById(bookDto.getGenreId());
+        Optional<Book> optionalBook = bookRepository.findBookByTitle(bookDto.title());
+        Optional<Author> optionalAuthor = authorRepository.findById(bookDto.authorId());
+        Optional<Genre> optionalGenre = genreRepository.findById(bookDto.genreId());
 
         if (optionalBook.isPresent() ){
             throw new AlreadyExistsException("Book already exists");
@@ -62,8 +59,8 @@ public class BookServiceImpl implements BookService {
         }
 
         Book book = new Book();
-        book.setTitle(bookDto.getTitle());
-        book.setDescription(bookDto.getDescription());
+        book.setTitle(bookDto.title());
+        book.setDescription(bookDto.description());
         book.setAuthor(optionalAuthor.get());
         book.setGenre(optionalGenre.get());
 
@@ -74,18 +71,20 @@ public class BookServiceImpl implements BookService {
     }
 
     private BookResponseDto convertToBookResponseDto(Book book) {
-        BookResponseDto bookResponseDto = modelMapper.map(book, BookResponseDto.class);
-        bookResponseDto.setAuthorResponseDto(modelMapper.map(book.getAuthor(), AuthorResponseDto.class));
-        bookResponseDto.setGenreResponseDto(modelMapper.map(book.getGenre(), GenreResponseDto.class));
-        return bookResponseDto;
+        return BookResponseDto
+                .builder()
+                .title(book.getTitle())
+                .description(book.getDescription())
+                .authorResponseDto(modelMapper.map(book.getAuthor(), AuthorResponseDto.class))
+                .build();
     }
 
     @Override
     public BookResponseDto updateBook(Long id, BookDto bookDto) {
 
         Optional<Book> optionalBook = bookRepository.findById(id);
-        Optional<Author> optionalAuthor = authorRepository.findById(bookDto.getAuthorId());
-        Optional<Genre> optionalGenre = genreRepository.findById(bookDto.getGenreId());
+        Optional<Author> optionalAuthor = authorRepository.findById(bookDto.authorId());
+        Optional<Genre> optionalGenre = genreRepository.findById(bookDto.genreId());
 
         if (optionalBook.isEmpty()){
             throw new RuntimeException("Book not found");
@@ -100,8 +99,8 @@ public class BookServiceImpl implements BookService {
         }
 
         Book book = optionalBook.get();
-        book.setTitle(bookDto.getTitle());
-        book.setDescription(bookDto.getDescription());
+        book.setTitle(bookDto.title());
+        book.setDescription(bookDto.description());
         book.setAuthor(optionalAuthor.get());
         book.setGenre(optionalGenre.get());
 

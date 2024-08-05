@@ -1,10 +1,13 @@
-package com.prunnytest.bookstore.dtos;
+package com.prunnytest.bookstore.responses;
 
-import lombok.Data;
+import com.prunnytest.bookstore.requests.BookDto;
+import lombok.Builder;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Builder
+@Setter
 public class AuthorResponseDto {
 
     private Long id;

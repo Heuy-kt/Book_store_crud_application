@@ -1,16 +1,13 @@
 package com.prunnytest.bookstore.controller;
 
-import com.prunnytest.bookstore.dtos.AuthorDto;
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
-import com.prunnytest.bookstore.dtos.GenreDto;
-import com.prunnytest.bookstore.dtos.GenreResponseDto;
+import com.prunnytest.bookstore.requests.GenreDto;
+import com.prunnytest.bookstore.responses.GenreResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.GenreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

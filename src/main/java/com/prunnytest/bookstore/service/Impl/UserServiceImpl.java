@@ -1,13 +1,11 @@
 package com.prunnytest.bookstore.service.Impl;
 
-import com.prunnytest.bookstore.dtos.UserDto;
-import com.prunnytest.bookstore.dtos.UserResponseDto;
+import com.prunnytest.bookstore.requests.UserDto;
+import com.prunnytest.bookstore.responses.UserResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
-import com.prunnytest.bookstore.exception.NotAccessibleException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.Book;
 import com.prunnytest.bookstore.model.User;
-import com.prunnytest.bookstore.model.enums.Roles;
 import com.prunnytest.bookstore.repository.BookRepository;
 import com.prunnytest.bookstore.repository.UserRepository;
 import com.prunnytest.bookstore.service.UserService;

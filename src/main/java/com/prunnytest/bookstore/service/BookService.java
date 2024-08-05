@@ -1,11 +1,9 @@
 package com.prunnytest.bookstore.service;
 
-import com.prunnytest.bookstore.dtos.BookDto;
-import com.prunnytest.bookstore.dtos.BookResponseDto;
+import com.prunnytest.bookstore.requests.BookDto;
+import com.prunnytest.bookstore.responses.BookResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 

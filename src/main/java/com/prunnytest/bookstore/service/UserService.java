@@ -1,14 +1,13 @@
 package com.prunnytest.bookstore.service;
 
-import com.prunnytest.bookstore.dtos.UserDto;
-import com.prunnytest.bookstore.dtos.UserResponseDto;
+import com.prunnytest.bookstore.requests.UserDto;
+import com.prunnytest.bookstore.responses.UserResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.Book;
 import com.prunnytest.bookstore.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService{
     UserResponseDto saveUser(UserDto userDto) throws AlreadyExistsException;

@@ -1,7 +1,7 @@
 package com.prunnytest.bookstore.service;
 
-import com.prunnytest.bookstore.dtos.GenreDto;
-import com.prunnytest.bookstore.dtos.GenreResponseDto;
+import com.prunnytest.bookstore.requests.GenreDto;
+import com.prunnytest.bookstore.responses.GenreResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 

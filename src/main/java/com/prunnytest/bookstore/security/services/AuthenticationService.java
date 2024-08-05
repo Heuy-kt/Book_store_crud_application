@@ -1,10 +1,11 @@
 package com.prunnytest.bookstore.security.services;
 
-import com.prunnytest.bookstore.dtos.AuthenticationResponseDto;
-import com.prunnytest.bookstore.dtos.UserDto;
+import com.prunnytest.bookstore.responses.AuthenticationResponseDto;
+import com.prunnytest.bookstore.requests.UserDto;
 
+import com.prunnytest.bookstore.requests.UserDtoLogin;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
-import com.prunnytest.bookstore.exception.NotFoundException;
+import com.prunnytest.bookstore.exception.NotAccessibleException;
 import com.prunnytest.bookstore.model.User;
 import com.prunnytest.bookstore.model.enums.Plan;
 import com.prunnytest.bookstore.model.enums.Roles;
@@ -15,8 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -47,15 +46,15 @@ public class AuthenticationService  {
         return new AuthenticationResponseDto(token);
     }
 
-    public AuthenticationResponseDto authenticate(UserDto userRequest){
+    public AuthenticationResponseDto authenticate(UserDtoLogin userRequest){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userRequest.userName(),
+                        userRequest.username(),
                         userRequest.password()
                 )
         );
-        User user = userRepository.findByUsername(userRequest.userName())
-                .orElseThrow(() -> new NotFoundException(format("%s has errors", userRequest.userName())));
+        User user = userRepository.findByUsername(userRequest.username())
+                .orElseThrow(() -> new NotAccessibleException(format("Having errors, or not permitted", userRequest.username())));
 
         String token = jwtService.generateToken(user);
         return new AuthenticationResponseDto(token);

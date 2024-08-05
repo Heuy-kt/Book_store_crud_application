@@ -1,10 +1,9 @@
 package com.prunnytest.bookstore.controller;
 
-import com.prunnytest.bookstore.dtos.AuthorDto;
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
+import com.prunnytest.bookstore.requests.AuthorDto;
+import com.prunnytest.bookstore.responses.AuthorResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
-import com.prunnytest.bookstore.service.AuthorService;
 import com.prunnytest.bookstore.service.Impl.AuthorServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

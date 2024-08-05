@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotAccessibleException.class)
   public ResponseEntity<String> handle(NotAccessibleException ex){
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.FORBIDDEN)
                 .body(ex.getMessage());
   }
 
@@ -49,7 +49,12 @@ public class GlobalExceptionHandler {
             .body(new CustomErrorResponse(errors));
   }
 
-
+  @ExceptionHandler(ValidationException.class)
+  public ResponseEntity<String> handle (ValidationException ex){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+}
 
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,7 +1,7 @@
 package com.prunnytest.bookstore.service;
 
-import com.prunnytest.bookstore.dtos.AuthorDto;
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
+import com.prunnytest.bookstore.requests.AuthorDto;
+import com.prunnytest.bookstore.responses.AuthorResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 

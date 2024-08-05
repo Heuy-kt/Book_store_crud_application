@@ -1,9 +1,13 @@
-package com.prunnytest.bookstore.dtos;
+package com.prunnytest.bookstore.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Setter;
 
+
+@Builder
 public record UserDto(
         @NotNull(message = "first name cant be blank")
         String firstName,

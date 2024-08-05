@@ -54,7 +54,7 @@ public class JWTService {
                 .builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+3600*1000))
+                .expiration(new Date(System.currentTimeMillis()+24*3600*1000))
                 .signWith(getSignInKey())
                 .compact();
 

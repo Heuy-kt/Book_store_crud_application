@@ -1,7 +1,7 @@
 package com.prunnytest.bookstore.service.Impl;
 
-import com.prunnytest.bookstore.dtos.GenreDto;
-import com.prunnytest.bookstore.dtos.GenreResponseDto;
+import com.prunnytest.bookstore.requests.GenreDto;
+import com.prunnytest.bookstore.responses.GenreResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.Genre;
@@ -29,15 +29,15 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreResponseDto saveGenre(GenreDto genreDto) throws AlreadyExistsException {
 
-        Optional<Genre> optionalGenre = genreRepository.findGenreByName(genreDto.getName());
+        Optional<Genre> optionalGenre = genreRepository.findGenreByName(genreDto.name());
 
         if (optionalGenre.isPresent()){
             throw new AlreadyExistsException("Genre already exists");
         }
 
         Genre genre = new Genre();
-        genre.setName(genreDto.getName());
-        genre.setDescription(genreDto.getDescription());
+        genre.setName(genreDto.name());
+        genre.setDescription(genreDto.description());
 
         genreRepository.save(genre);
         log.info("Genre successfully saved in the database");
@@ -56,8 +56,8 @@ public class GenreServiceImpl implements GenreService {
         }
 
         Genre genre = optionalGenre.get();
-        genre.setName(genreDto.getName());
-        genre.setDescription(genreDto.getDescription());
+        genre.setName(genreDto.name());
+        genre.setDescription(genreDto.description());
 
         genreRepository.save(genre);
 

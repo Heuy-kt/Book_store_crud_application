@@ -1,9 +1,8 @@
 package com.prunnytest.bookstore.service.Impl;
 
-import com.prunnytest.bookstore.dtos.AuthorDto;
-import com.prunnytest.bookstore.dtos.AuthorResponseDto;
-import com.prunnytest.bookstore.dtos.BookDto;
-import com.prunnytest.bookstore.dtos.BookResponseDto;
+import com.prunnytest.bookstore.requests.AuthorDto;
+import com.prunnytest.bookstore.responses.AuthorResponseDto;
+import com.prunnytest.bookstore.requests.BookDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.model.Author;
@@ -11,11 +10,9 @@ import com.prunnytest.bookstore.repository.AuthorRepository;
 import com.prunnytest.bookstore.service.AuthorService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

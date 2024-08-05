@@ -1,7 +1,7 @@
 package com.prunnytest.bookstore.controller;
 
-import com.prunnytest.bookstore.dtos.UserDto;
-import com.prunnytest.bookstore.dtos.UserResponseDto;
+import com.prunnytest.bookstore.requests.UserDto;
+import com.prunnytest.bookstore.responses.UserResponseDto;
 
 import com.prunnytest.bookstore.service.Impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,4 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    @PostMapping("create")
-    public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserDto userDto){
-        return ResponseEntity.ok(userService.saveUser(userDto));
-
-    }
 }
