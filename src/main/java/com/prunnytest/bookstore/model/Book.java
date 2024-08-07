@@ -1,6 +1,5 @@
 package com.prunnytest.bookstore.model;
 
-import com.prunnytest.bookstore.model.enums.Plan;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,7 +30,5 @@ public class Book {
   @JoinColumn(name = "genre_id")
   private Genre genre;
 
-  @Enumerated(EnumType.STRING)
-  private Plan plan;
 
 }

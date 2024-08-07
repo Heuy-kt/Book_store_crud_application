@@ -1,13 +1,16 @@
 package com.prunnytest.bookstore.controller;
 
+import com.prunnytest.bookstore.model.User;
+import com.prunnytest.bookstore.model.enums.Roles;
 import com.prunnytest.bookstore.requests.BookDto;
 import com.prunnytest.bookstore.responses.BookResponseDto;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.Impl.BookServiceImpl;
+import com.prunnytest.bookstore.service.Impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +18,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.prunnytest.bookstore.util.Constants.*;
 
 @Tag(name = "Book", description = "Book set of APIs")
 @RestController
 @RequestMapping("/api/v1/book")
+@RequiredArgsConstructor
 public class BookController {
 
-    @Autowired
+
     private BookServiceImpl bookService;
+    private UserServiceImpl userService;
 
 
     @Operation(summary = "Register book using the Author and Genre reference ID's")
@@ -57,7 +63,7 @@ public class BookController {
     }
 
     @Operation(summary = "Update the Book using the book ID")
-    @PutMapping("/{id}")
+    @PutMapping("management/{id}")
     public ResponseEntity<Map<String, Object>> updateBookDetails(@PathVariable("id") Long id, @RequestBody BookDto bookDto) {
         BookResponseDto updateBook = bookService.updateBook(id, bookDto);
         Map<String, Object> response = new HashMap<>();
@@ -70,7 +76,7 @@ public class BookController {
 
 
     @Operation(summary = "Delete the Book using the book ID")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("management/{id}")
     public ResponseEntity<Map<String, Object>> deleteBooks(@PathVariable("id") Long id) {
 
         bookService.deleteBook(id);
@@ -83,7 +89,7 @@ public class BookController {
     }
 
     @Operation(summary = "List all the books in catalogue with authors and genre details")
-    @GetMapping("/listBooks")
+    @GetMapping("basic/listBooks")
     public ResponseEntity<Map<String, Object>> getAllBooks() {
         List<BookResponseDto> bookList = bookService.listAllBooks();
 
@@ -96,5 +102,36 @@ public class BookController {
     }
 
 
+    @Operation(summary = "testing premium collections")
+    @GetMapping("premium/premium_books")
+    public ResponseEntity<List<String>> getPremiumBooks(){
+        return ResponseEntity.ok().body(
+                List.of("PREMIUM NEW KINGS",
+                        "PREMIUM GREEN",
+                        "PREMIUM BLACK")
+        );
+    }
+
+    @Operation(summary = "upgrading to premium")
+    @PutMapping("management/upgrade")
+    public ResponseEntity<String> upgradeBook(@RequestParam("username")String name){
+        User user = userService.getUserByUsername(name);
+        user.setRole(Roles.PREMIUM);
+
+        return ResponseEntity.ok().body("USER upgraded");
+
+    }
+
+    @Operation(summary = "upgrading to premium")
+    @GetMapping("admin/testing_admin")
+    public ResponseEntity<String> testAdmin(){
+        return ResponseEntity.ok().body("admin tested");
+    }
+
+    @Operation(summary = "upgrading to premium")
+    @GetMapping("management/testing_management")
+    public ResponseEntity<String> testManagement(){
+        return ResponseEntity.ok().body("testing management");
+    }
 
 }

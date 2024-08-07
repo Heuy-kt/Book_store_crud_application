@@ -7,15 +7,11 @@ import lombok.Setter;
 import java.util.List;
 
 @Builder
-@Setter
-public class AuthorResponseDto {
-
-    private Long id;
-
-    private String name;
-
-    private String Bio;
-
-    private List<BookDto> books;
+public record AuthorResponseDto(
+        Long id,
+        String name,
+        String Bio,
+        List<BookDto> books
+){
 
 }

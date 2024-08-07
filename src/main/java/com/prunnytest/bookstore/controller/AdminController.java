@@ -3,7 +3,7 @@ package com.prunnytest.bookstore.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("v1/api/admin")
+@RequestMapping("api/v1/admin")
 public class AdminController {
 
     @GetMapping("fetch")

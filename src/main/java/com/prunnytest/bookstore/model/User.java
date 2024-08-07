@@ -1,16 +1,12 @@
 package com.prunnytest.bookstore.model;
 
-import com.prunnytest.bookstore.model.enums.Plan;
 import com.prunnytest.bookstore.model.enums.Roles;
-import com.prunnytest.bookstore.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Setter
@@ -31,8 +27,6 @@ public class User implements UserDetails{
     private String password;
     @Enumerated(EnumType.STRING)
     private Roles role;
-    @Enumerated(EnumType.STRING)
-    private Plan plan;
 
 //    @OneToMany(mappedBy = "user")
 //    private List<Token> tokens;

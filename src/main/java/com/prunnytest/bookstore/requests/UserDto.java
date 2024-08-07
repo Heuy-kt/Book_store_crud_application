@@ -1,5 +1,6 @@
 package com.prunnytest.bookstore.requests;
 
+import com.prunnytest.bookstore.model.enums.Roles;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,8 @@ public record UserDto(
         @Email(message = "incorrect email")
         String email,
         @NotBlank(message = "password cant be blank")
-        String password
+        String password,
+        @NotBlank(message = "hello, check role")
+        Roles role
 ) {
 }

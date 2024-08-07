@@ -83,11 +83,11 @@ public class AuthorServiceImpl implements AuthorService {
 
     private AuthorResponseDto convertToAuthorResponseDto(Author author) {
         AuthorResponseDto authorResponseDto = modelMapper.map(author, AuthorResponseDto.class);
-        authorResponseDto.setBooks(
-                author.getBooks().stream()
-                        .map(book -> modelMapper.map(book, BookDto.class))
-                        .collect(Collectors.toList())
-        );
+//        authorResponseDto.setBooks(
+//                author.getBooks().stream()
+//                        .map(book -> modelMapper.map(book, BookDto.class))
+//                        .collect(Collectors.toList())
+//        );
         return authorResponseDto;
     }
 

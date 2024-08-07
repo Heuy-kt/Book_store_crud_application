@@ -129,6 +129,15 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    public Book getOriginalBookByTitle(String title) throws NotFoundException {
+
+        Book book = bookRepository.findBookByTitle(title)
+                .orElseThrow(() -> new NotFoundException("Book not found"));
+
+        return book;
+
+    }
+
     @Override
     public void deleteBook(Long id) {
 

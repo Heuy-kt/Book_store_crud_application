@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -68,8 +69,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto getUserByName(String name) throws NotFoundException {
-        return null;
+    public User getUserByUsername(String username) throws NotFoundException {
+
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new NotFoundException("User not in our database")
+        );
     }
 
     @Override

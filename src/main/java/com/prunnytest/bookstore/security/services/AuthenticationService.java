@@ -7,7 +7,6 @@ import com.prunnytest.bookstore.requests.UserDtoLogin;
 import com.prunnytest.bookstore.exception.AlreadyExistsException;
 import com.prunnytest.bookstore.exception.NotAccessibleException;
 import com.prunnytest.bookstore.model.User;
-import com.prunnytest.bookstore.model.enums.Plan;
 import com.prunnytest.bookstore.model.enums.Roles;
 import com.prunnytest.bookstore.repository.UserRepository;
 import com.prunnytest.bookstore.security.jwt.JWTService;
@@ -37,8 +36,7 @@ public class AuthenticationService  {
                 .username(userDto.userName())
                 .email(userDto.email())
                 .password(passwordEncoder.encode(userDto.password()))
-                .role(Roles.USER)
-                .plan(Plan.BASIC)
+                .role(userDto.role())
                 .build();
         userRepository.save(user);
         String token = jwtService.generateToken(user);

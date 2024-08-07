@@ -7,23 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter
-@Setter
+@Data
+@Entity
+@Builder
+@Table(name = "authors")
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "authors")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    public Author(String name, String bio) {
-        this.name = name;
-        Bio = bio;
-        this.books = new ArrayList<>();
-    }
 
     @Column(nullable = false,unique = true)
     private String name;
