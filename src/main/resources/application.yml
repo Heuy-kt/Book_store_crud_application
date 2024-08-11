@@ -30,3 +30,8 @@ application:
       access-token-expiration: 86400000
 #      refresh-token-expiration: 604800000
 
+# swagger-ui custom path
+  springdoc:
+    swagger-ui:
+      path:
+        /swagger-ui.html

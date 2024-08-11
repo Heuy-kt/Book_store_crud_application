@@ -9,6 +9,7 @@ import com.prunnytest.bookstore.exception.NotFoundException;
 import com.prunnytest.bookstore.service.Impl.BookServiceImpl;
 import com.prunnytest.bookstore.service.Impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import static com.prunnytest.bookstore.util.Constants.*;
 @Tag(name = "Book", description = "Book set of APIs")
 @RestController
 @RequestMapping("/api/v1/book")
+@Tag(name = "books")
 @RequiredArgsConstructor
 public class BookController {
 
@@ -33,7 +35,20 @@ public class BookController {
     private UserServiceImpl userService;
 
 
-    @Operation(summary = "Register book using the Author and Genre reference ID's")
+    @Operation(
+            description = "registering a book",
+            summary = "Register book using the Author and Genre reference ID's",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "NOT FOUND",
+                            responseCode = "404"
+                    )
+            }
+    )
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> registerBook(@RequestBody BookDto bookDto) throws AlreadyExistsException, NotFoundException {
 

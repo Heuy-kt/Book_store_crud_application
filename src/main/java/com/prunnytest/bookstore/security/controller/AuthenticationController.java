@@ -5,6 +5,7 @@ import com.prunnytest.bookstore.requests.UserDto;
 import com.prunnytest.bookstore.requests.UserDtoLogin;
 import com.prunnytest.bookstore.security.services.AuthenticationService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("")
+@Tag(name = "Authentication")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
